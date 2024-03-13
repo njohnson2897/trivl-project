@@ -6,7 +6,7 @@ function apiRequest() {
     const requestUrl = 'https://the-trivia-api.com/api/questions';
 
     fetch(requestUrl)
-        .then(function(response) {
+        .then(function (response) {
             return response.json();
         })
         .then(function(data) {
