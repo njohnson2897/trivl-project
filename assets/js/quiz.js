@@ -18,6 +18,21 @@ function apiRequest() {
         });
 }
 
+// $(document).ready(function() {
+//     // Initially hide the message
+//     $('.fullscreen-message').hide();
+
+//     // Example: Show the message when a button is clicked (add a button with id="show-message" to your HTML)
+//     $('#show-message').click(function() {
+//         $('.fullscreen-message').show();
+//     });
+
+//     // Hide the message when the delete button is clicked
+//     $('.fullscreen-message .delete').click(function() {
+//         $(this).closest('.fullscreen-message').hide();
+//     });
+// });
+
 function displayQuestions(questions) {
     const container = $('#quiz-container');
     container.empty(); // Clear previous content
