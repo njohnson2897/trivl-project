@@ -1,7 +1,3 @@
-$(document).ready(function() {
-    apiRequest();
-});
-
 function apiRequest() {
     const requestUrl = 'https://the-trivia-api.com/api/questions';
 
@@ -14,12 +10,12 @@ function apiRequest() {
         })
         .catch(function(error) {
             console.error('Fetch error:', error);
-            $('#quiz-container').text('Failed to load questions. Please try again later.');
+            $('#carousel-demo').text('Failed to load questions. Please try again later.');
         });
 }
 
 function displayQuestions(questions) {
-    const container = $('#quiz-container');
+    const container = $('#carousel-demo');
     container.empty(); // Clear previous content
     
     questions.forEach((question, index) => {
@@ -29,5 +25,23 @@ function displayQuestions(questions) {
         
         questionBlock.append(questionText, answerText);
         container.append(questionBlock);
+
+    });
+        const carousels = bulmaCarousel.attach('#carousel-demo',{
+            loop: true,
+            slidesToScroll: 1,
+            slidesToShow: 1,
     });
 }
+
+// To access to bulmaCarousel instance of an element
+const element = document.querySelector('#my-element');
+if (element && element.bulmaCarousel) {
+	// bulmaCarousel instance is available as element.bulmaCarousel
+}
+
+
+
+$(document).ready(function() {
+    apiRequest();
+});
