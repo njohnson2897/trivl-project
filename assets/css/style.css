@@ -1,0 +1,14 @@
+.overlay-message {
+    position: fixed; /* Fixed position to make it stay in place even when scrolling */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 20vw; /* Full width of the viewport */
+    height: 20vh; /* Full height of the viewport */
+    z-index: 1; /* High z-index to ensure it's on top of other content */
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center; /* Center the message vertically */
+    justify-content: center; /* Center the message horizontally */
+}
