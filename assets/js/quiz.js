@@ -53,9 +53,6 @@ function displayQuestions(questions) {
     });
 }
 
-
-
-
 $(document).ready(function() {
     apiRequest();
 });
