@@ -38,9 +38,11 @@ function displayQuestions(questions) {
     questions.forEach((question, index) => {
         const questionBlock = $('<div>').addClass('question-block');
         const questionText = $('<p>').addClass('question-text').text(`Question ${index + 1}: ${question.question}`);
-        const answerText = $('<p>').addClass('answer-text').html(`Answer: <strong>${question.correctAnswer}</strong>`);
+        // const answerText = $('<p>').addClass('answer-text').html(`Answer: <strong>${question.correctAnswer}</strong>`);
+        // const questionText = $('<')
         
-        questionBlock.append(questionText, answerText);
+        questionBlock.append(questionText);
+        // questionBlock.append(answerText);
         container.append(questionBlock);
 
     });
@@ -51,11 +53,6 @@ function displayQuestions(questions) {
     });
 }
 
-// To access to bulmaCarousel instance of an element
-const element = document.querySelector('#my-element');
-if (element && element.bulmaCarousel) {
-	// bulmaCarousel instance is available as element.bulmaCarousel
-}
 
 
 
