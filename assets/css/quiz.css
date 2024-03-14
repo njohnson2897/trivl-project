@@ -72,7 +72,10 @@ input {
 }
 
 #submit-quiz {
-    width: 50%;
+    width: 20%;
     box-sizing: border-box;
 }
 
+.submit-button {
+    text-align: center;
+}
