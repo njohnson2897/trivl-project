@@ -1,17 +1,43 @@
 function apiRequest() {
-    const requestUrl = 'https://the-trivia-api.com/api/questions';
+    const fetchAndDisplayQuestions = () => {
+        const requestUrl = 'https://the-trivia-api.com/api/questions';
 
-    fetch(requestUrl)
-        .then(function(response) {
-            return response.json();
-        })
-        .then(function(data) {
-            displayQuestions(data);
-        })
-        .catch(function(error) {
-            console.error('Fetch error:', error);
-            $('#carousel-demo').text('Failed to load questions. Please try again later.');
-        });
+        fetch(requestUrl)
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (data) {
+                localStorage.setItem('triviaQuestions', JSON.stringify(data));
+
+
+                displayQuestions(data);
+            })
+
+
+            .catch(function (error) {
+                console.error('Fetch error:', error);
+                $('#carousel-demo').text('Failed to load questions. Please try again later.');
+            });
+
+    }
+
+    const updateData = () => {
+        const triviaQuestions = localStorage.getItem('triviaQuestions');
+        const lastUpdateTime = localStorage.getItem('lastUpdateTime');
+        const currentTime = new Date().getTime();
+
+        if (triviaQuestions && lastUpdateTime && (currentTime - parseInt(lastUpdateTime) < 60 * 1000)) { // set to one minute for showing purposes
+            const parsedData = JSON.parse(triviaQuestions);                                              //    for a daily question change add 24 * 60 * 60 * 1000
+            displayQuestions(parsedData);
+        } else {
+            fetchAndDisplayQuestions();
+            localStorage.setItem('lastUpdateTime', currentTime.toString());
+        }
+    }
+
+    updateData();
+
+    setInterval(updateData, 24 * 60 * 60 * 1000);
 }
 
 // modal for javascript: https://bulma.io/documentation/components/modal/#image-modal
@@ -34,25 +60,25 @@ document.addEventListener('DOMContentLoaded', () => {
 function displayQuestions(questions) {
     const container = $('#carousel-demo');
     container.empty(); // Clear previous content
-    
+
     questions.forEach((question, index) => {
         const questionBlock = $('<div>').addClass('question-block');
         const questionText = $('<p>').addClass('question-text').text(`Question ${index + 1}: ${question.question}`);
         // const answerText = $('<p>').addClass('answer-text').html(`Answer: <strong>${question.correctAnswer}</strong>`);
         // const questionText = $('<')
-        
+
         questionBlock.append(questionText);
         // questionBlock.append(answerText);
         container.append(questionBlock);
 
     });
-        const carousels = bulmaCarousel.attach('#carousel-demo',{
-            loop: true,
-            slidesToScroll: 1,
-            slidesToShow: 1,
+    const carousels = bulmaCarousel.attach('#carousel-demo', {
+        loop: true,
+        slidesToScroll: 1,
+        slidesToShow: 1,
     });
 }
 
-$(document).ready(function() {
+$(document).ready(function () {
     apiRequest();
 });
