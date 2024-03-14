@@ -14,20 +14,22 @@ function apiRequest() {
         });
 }
 
-// $(document).ready(function() {
-//     // Initially hide the message
-//     $('.fullscreen-message').hide();
+// modal for javascript: https://bulma.io/documentation/components/modal/#image-modal
+document.addEventListener('DOMContentLoaded', () => {
+    const modal = document.getElementById('trivlModal');
+    // Automatically show the modal when the page is loaded
+    modal.classList.add('is-active');
 
-//     // Example: Show the message when a button is clicked (add a button with id="show-message" to your HTML)
-//     $('#show-message').click(function() {
-//         $('.fullscreen-message').show();
-//     });
+    const modalBg = modal.querySelector('.modal-background');
+    const modalClose = modal.querySelector('.modal-close');
 
-//     // Hide the message when the delete button is clicked
-//     $('.fullscreen-message .delete').click(function() {
-//         $(this).closest('.fullscreen-message').hide();
-//     });
-// });
+    [modalBg, modalClose].forEach(el => {
+        el.addEventListener('click', () => modal.classList.remove('is-active'));
+    });
+
+    //Prevent modal content clicks from closing the modal
+    document.querySelector('.modal-content').addEventListener('click', (e) => e.stopPropagation());
+});
 
 function displayQuestions(questions) {
     const container = $('#carousel-demo');
