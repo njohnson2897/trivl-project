@@ -8,14 +8,41 @@
     <link rel="stylesheet" href="assets/style.css">
     <!-- bulma -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <!-- Your custom CSS -->
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="./assets/css/quiz.css">
 </head>
 <body>
+    <header>
+        <h1>Trivl</h1>
+    </header>
+    <!-- Open message Button -->
+    <div class="modal" id="trivlModal">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+            <!-- Your content here -->
+            <div class="box">
+                <p>About TRIVL</p>
+                <img src="./assets/images/trivl_modal_test.png" alt="">
+                <div>
+                    Lorem ipsum dolor sit amet...
+                </div>
+            </div>
+        </div>
+        <button class="modal-close is-large" aria-label="close"></button>
+    </div>
 
-    <nav class="navbar" role="navigation" aria-label="main navigation">
-        <div class="navbar-brand">
-          <a class="navbar-item" href="https://bulma.io">
-            <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
-          </a>
-    
+    <div class="container">
+        <div id="carousel-demo" class="carousel">
+            <!-- Quiz content will be injected here -->
+        </div>
+    </div>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <!-- Ensure this script is necessary and correctly sourced -->
+    <script src="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.3/dist/js/bulma-carousel.min.js"></script>
+    <!-- Your quiz script -->
+    <script src="./assets/js/quiz.js"></script>
 </body>
 </html>
