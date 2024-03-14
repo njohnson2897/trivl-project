@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Triva</title>
-    <!-- css -->
-    <link rel="stylesheet" href="assets/style.css">
-    <!-- bulma -->
+    <meta http-equiv="refresh" content="61">
+<!-- This is the auto refresher. Then content="number of seconds one day and a minute equals 86460" added 60 seconds so questions have time to update before the auto refrsh -->
+    <title>Trivia Quiz</title>
+    <!-- Ensure this path is correct if bulma-carousel is needed, else consider removing -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.3/dist/css/bulma-carousel.min.css">
+    <!-- Bulma CSS for styling -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <!-- Your custom CSS -->
     <link rel="stylesheet" href="./assets/css/style.css">
@@ -14,7 +16,7 @@
 </head>
 <body>
     <header>
-        <h1>Trivl</h1>
+        <h1 class="title">Trivl</h1>
     </header>
     <!-- Open message Button -->
     <div class="modal" id="trivlModal">
