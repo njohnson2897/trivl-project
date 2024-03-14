@@ -93,6 +93,7 @@ function displayQuestions(questions) {
         slidesToScroll: 1,
         slidesToShow: 1,
     });
+
 }
 
 // submit quiz function
