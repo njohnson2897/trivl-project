@@ -6,20 +6,21 @@
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 100%;
-    text-align: center;
 }
+
 
 .container p {
     color:white;
 }
 
-#question {
-    margin-bottom: 20px;
-    font-size: 24px;
-
-/* button placeholder */
+.question-block {
+   margin: 3% 10%;
 }
 
+.question-block p {
+    text-decoration: underline;
+    font-size: 1.25rem;
+}
 button {
     display: block;
     width: 100%;
@@ -58,5 +59,20 @@ header {
 }
 
 p {
-    padding-bottom: 5%;
+    padding-bottom: 1%;
 }
+
+label, input {
+    padding-bottom: 1%;
+    color: white;
+}
+
+input {
+    margin-right: 2%
+}
+
+#submit-quiz {
+    width: 50%;
+    box-sizing: border-box;
+}
+
