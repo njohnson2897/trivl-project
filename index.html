@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,14 +12,29 @@
     <!-- Your custom CSS -->
     <link rel="stylesheet" href="./assets/css/style.css">
 </head>
+
 <body>
-    <body>
+  <!-- Open message Button -->
+  <div class="modal" id="trivlModal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+        <!-- Your content here -->
+        <div class="box">
+            <p>About TRIVL</p>
+            <img src="./assets/images/trivl_modal_test.png" alt="">
+            <div>
+                Lorem ipsum dolor sit amet...
+            </div>
+        </div>
+    </div>
+    <button class="modal-close is-large" aria-label="close"></button>
+</div>
+
             <div class="container">
                 <h1 class="title">TRIVL</h1>
                 <div id="carousel-demo" class="carousel"> 
                  <!-- Quiz content will be injected here -->
                 </div>
-			
             </div>
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
          <!-- jQuery -->
@@ -27,7 +43,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.3/dist/js/bulma-carousel.min.js"></script>
     <!-- Your quiz script -->
     <script src="./assets/js/quiz.js"></script>
-    </body>
-    </html>
 </body>
+
 </html>

@@ -14,6 +14,23 @@ function apiRequest() {
         });
 }
 
+// modal for javascript: https://bulma.io/documentation/components/modal/#image-modal
+document.addEventListener('DOMContentLoaded', () => {
+    const modal = document.getElementById('trivlModal');
+    // Automatically show the modal when the page is loaded
+    modal.classList.add('is-active');
+
+    const modalBg = modal.querySelector('.modal-background');
+    const modalClose = modal.querySelector('.modal-close');
+
+    [modalBg, modalClose].forEach(el => {
+        el.addEventListener('click', () => modal.classList.remove('is-active'));
+    });
+
+    //Prevent modal content clicks from closing the modal
+    document.querySelector('.modal-content').addEventListener('click', (e) => e.stopPropagation());
+});
+
 function displayQuestions(questions) {
     const container = $('#carousel-demo');
     container.empty(); // Clear previous content
@@ -21,9 +38,11 @@ function displayQuestions(questions) {
     questions.forEach((question, index) => {
         const questionBlock = $('<div>').addClass('question-block');
         const questionText = $('<p>').addClass('question-text').text(`Question ${index + 1}: ${question.question}`);
-        const answerText = $('<p>').addClass('answer-text').html(`Answer: <strong>${question.correctAnswer}</strong>`);
+        // const answerText = $('<p>').addClass('answer-text').html(`Answer: <strong>${question.correctAnswer}</strong>`);
+        // const questionText = $('<')
         
-        questionBlock.append(questionText, answerText);
+        questionBlock.append(questionText);
+        // questionBlock.append(answerText);
         container.append(questionBlock);
 
     });
@@ -33,14 +52,6 @@ function displayQuestions(questions) {
             slidesToShow: 1,
     });
 }
-
-// To access to bulmaCarousel instance of an element
-const element = document.querySelector('#my-element');
-if (element && element.bulmaCarousel) {
-	// bulmaCarousel instance is available as element.bulmaCarousel
-}
-
-
 
 $(document).ready(function() {
     apiRequest();
