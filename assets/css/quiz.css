@@ -71,3 +71,8 @@ input {
     margin-right: 2%
 }
 
+#submit-quiz {
+    width: 50%;
+    box-sizing: border-box;
+}
+
