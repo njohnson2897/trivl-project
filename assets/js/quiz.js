@@ -55,21 +55,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //Prevent modal content clicks from closing the modal
     document.querySelector('.modal-content').addEventListener('click', (e) => e.stopPropagation());
+    apiRequest();
 });
 
 function displayQuestions(questions) {
-    const container = $('#carousel-demo');
+    const container = $('#carousel-demo')
+    container.addClass('columns')
     container.empty(); // Clear previous content
 
     questions.forEach((question, index) => {
-        const questionBlock = $('<div>').addClass('question-block');
-        const questionText = $('<p>').addClass('question-text').text(`Question ${index + 1}: ${question.question}`);
-        // const answerText = $('<p>').addClass('answer-text').html(`Answer: <strong>${question.correctAnswer}</strong>`);
-        // const questionText = $('<')
-
+        const questionBlock = $('<div>').addClass('question-block column');
+        const questionText = $('<p>').addClass('question-text columns is-full').text(`Question ${index + 1}: ${question.question}`);
+        const optionBlockA = $('<div>').addClass('option-block columns')
+        const optionBlockB = $('<div>').addClass('option-block columns')
+        const optionBlockC = $('<div>').addClass('option-block columns')
+        const optionBlockD = $('<div>').addClass('option-block columns')
+        const optionA = $(`<input type="radio" name="answerChoices${index}" value="optionA">`)
+        const optionAText = $('<label for="optionA">').text(question.correctAnswer)
+        const optionB = $(`<input type="radio" name="answerChoices${index}" value="optionB">`)
+        const optionBText = $('<label for="optionB">').text(question.incorrectAnswers[0])
+        const optionC = $(`<input type="radio" name="answerChoices${index}" value="optionC">`)
+        const optionCText = $('<label for="optionC">').text(question.incorrectAnswers[1])
+        const optionD = $(`<input type="radio" name="answerChoices${index}" value="optionD">`)
+        const optionDText = $('<label for="optionD">').text(question.incorrectAnswers[2])
+        
+        optionBlockA.append(optionA, optionAText)
+        optionBlockB.append(optionB, optionBText)
+        optionBlockC.append(optionC, optionCText)
+        optionBlockD.append(optionD, optionDText)
         questionBlock.append(questionText);
-        // questionBlock.append(answerText);
-        container.append(questionBlock);
+        questionBlock.append(optionBlockA, optionBlockB, optionBlockC, optionBlockD);
+        container.append(questionBlock)
 
     });
     const carousels = bulmaCarousel.attach('#carousel-demo', {
@@ -78,7 +94,3 @@ function displayQuestions(questions) {
         slidesToShow: 1,
     });
 }
-
-$(document).ready(function () {
-    apiRequest();
-});
