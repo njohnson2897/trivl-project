@@ -42,9 +42,11 @@ button {
     cursor: pointer;
     transition: background-color 0.3s;
 }
+
 button:hover {
     background-color: #0056b3;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    color: white !important;
 }
 
 #result {
@@ -59,24 +61,8 @@ button:hover {
     max-width: 600px;
 }
 
-header {
-    margin-bottom: 5%;
-}
-.title {
-    border-bottom: 5px solid black;
-    text-align: center;
-    font-weight: bold;
-    font-size: 30px;
-    margin-bottom: 10px;
-}
-
 p {
     padding-bottom: 1%;
-}
-
-label, input {
-    padding-bottom: 1%;
-    color: white;
 }
 
 input {
