@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TRIVL Quiz Results</title>
+    <link rel="stylesheet" href="./assets/css/style.css">
     <link rel="stylesheet" href="./assets/css/results.css">
-    <link rel="stylesheet" href="./assets/js/results.js">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
 </head>
 <body>
 
   <header>
-    <h1 class="header">Trivl</h1>
+    <h1 class="title header">TRIVL</h1>
 </header>
 
 <!-- Open message Button -->
@@ -20,7 +20,7 @@
   <div class="modal-content">
       <!-- Your content here -->
       <div class="box">
-          <p><strong>Well done on today's quiz!</strong><br><br></p>
+          <p><strong>You have completed today's quiz!</strong><br><br></p>
           <div id="results-container">
             <!-- User data from quiz goes here {score/10}-->
             You Answered {score/10} Questions Correctly 
@@ -30,9 +30,9 @@
   <button class="modal-close is-large" aria-label="close"></button>
 </div>
 
-    <div class="card"> 
+    <div class="card container is-fluid"> 
         <div class="card-content">
-          <p class="title">
+          <p class="card-title">
             Thanks for playing TRIVL
           </p>
           <p class="subtitle">
@@ -41,7 +41,7 @@
           </p>
         </div>
        
-<button id="openModalBtn">How'd I do?</button>
+<button id="openModalBtn">Answer Key</button>
 
 <!-- The Modal -->
 <div id="myModal" class="modal">
@@ -55,12 +55,12 @@
         <footer class="card-footer">
           <p class="card-footer-item">
             <span>
-              Share on <a href="https://twitter.com">Twitter</a>
+              <a href="https://twitter.com">Share on Twitter</a>
             </span>
           </p>
           <p class="card-footer-item">
             <span>
-              Share on <a href="https://facebook.com">Facebook</a>
+              <a href="https://facebook.com">Share on Facebook</a>
             </span>
           </p>
         </footer>
