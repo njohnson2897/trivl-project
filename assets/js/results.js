@@ -1,26 +1,44 @@
-// extra line comments so I can remember how to do this :)
-// Listen for the DOMContentLoaded event to ensure the DOM is fully loaded before executing the script.
-document.addEventListener('DOMContentLoaded', function() {
-    var questions = JSON.parse(localStorage.getItem('triviaQuestions')) || [];
-    // Retrieve the array of user answers from localStorage, or initialize as an empty array if not found.
-    var answers = JSON.parse(localStorage.getItem('quizAnswers')) || [];
-    // Initialize a counter to track the number of correct answers.
-    var correctCount = 0;
-
-    answers.forEach(function(answer) {
-        // Find the corresponding question in the questions array using the question ID.
-        var question = questions.find(function(q) { return q.id === answer.questionId; });
-        // Check if the question exists then selected answer matches the correct answer.
-        if (question && question.correctAnswer === answer.selectedAnswer) {
-            // Increment the correct answer count if the answer is correct.
-            correctCount++;
-        }
+// modal for javascript: https://bulma.io/documentation/components/modal/#image-modal
+document.addEventListener('DOMContentLoaded', () => {
+    const modal = document.getElementById('trivlModal');
+    // Automatically show the modal when the page is loaded
+    modal.classList.add('is-active');
+  
+    const modalBg = modal.querySelector('.modal-background');
+    const modalClose = modal.querySelector('.modal-close');
+  
+    [modalBg, modalClose].forEach(el => {
+        el.addEventListener('click', () => modal.classList.remove('is-active'));
     });
-
-    // Create a new div element to serve as the container for the results display.
-    var resultsContainer = document.createElement('div');
-    // Set the inner HTML of the results container to display the number of correct answers out of the total number of questions.
-    resultsContainer.innerHTML = 'You answered ' + correctCount + ' out of ' + questions.length + ' questions correctly.';
-    // Append the results container to the body of the document, making it visible on the page.
-    document.body.appendChild(resultsContainer);
-});
+  
+    //Prevent modal content clicks from closing the modal
+    document.querySelector('.modal-content').addEventListener('click', (e) => e.stopPropagation());
+    apiRequest();
+  });
+  
+  // Get the modal
+  var modal = document.getElementById("myModal");
+  
+  // Get the button that opens the modal
+  var btn = document.getElementById("openModalBtn");
+  
+  // Get the <span> element that closes the modal
+  var span = document.getElementsByClassName("close")[0];
+  
+  // When the user clicks the button, open the modal 
+  btn.onclick = function() {
+    modal.style.display = "block";
+  }
+  
+  // When the user clicks on <span> (x), close the modal
+  span.onclick = function() {
+    modal.style.display = "none";
+  }
+  
+  // When the user clicks anywhere outside of the modal, close it
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  }
+  
