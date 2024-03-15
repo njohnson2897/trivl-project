@@ -43,67 +43,117 @@ function apiRequest() {
 // modal for javascript: https://bulma.io/documentation/components/modal/#image-modal
 document.addEventListener('DOMContentLoaded', () => {
     const modal = document.getElementById('trivlModal');
-    // Automatically show the modal when the page is loaded
-    modal.classList.add('is-active');
+    if (modal) {
+        // Automatically show the modal when the page is loaded
+        modal.classList.add('is-active');
 
-    const modalBg = modal.querySelector('.modal-background');
-    const modalClose = modal.querySelector('.modal-close');
+        const modalBg = modal.querySelector('.modal-background');
+        const modalClose = modal.querySelector('.modal-close');
 
-    [modalBg, modalClose].forEach(el => {
-        el.addEventListener('click', () => modal.classList.remove('is-active'));
-    });
+        [modalBg, modalClose].forEach(el => {
+            if (el) {
+                el.addEventListener('click', () => modal.classList.remove('is-active'));
+            }
+        });
 
-    //Prevent modal content clicks from closing the modal
-    document.querySelector('.modal-content').addEventListener('click', (e) => e.stopPropagation());
-    apiRequest();
-});
-
-function displayQuestions(questions) {
-    const container = $('#carousel-demo')
-    container.addClass('columns')
-    container.empty(); // Clear previous content
-
-    questions.forEach((question, index) => {
-        const questionBlock = $('<div>').addClass('question-block column');
-        const questionText = $('<p>').addClass('question-text columns is-full').text(`Question ${index + 1}: ${question.question}`);
-        const optionBlockA = $('<div>').addClass('option-block columns')
-        const optionBlockB = $('<div>').addClass('option-block columns')
-        const optionBlockC = $('<div>').addClass('option-block columns')
-        const optionBlockD = $('<div>').addClass('option-block columns')
-        const optionA = $(`<input type="radio" name="answerChoices${index}" value="optionA">`)
-        // const optionAText = $('<label for="optionA">').text(question.correctAnswer)
-        const optionB = $(`<input type="radio" name="answerChoices${index}" value="optionB">`)
-        // const optionBText = $('<label for="optionB">').text(question.incorrectAnswers[0])
-        const optionC = $(`<input type="radio" name="answerChoices${index}" value="optionC">`)
-        // const optionCText = $('<label for="optionC">').text(question.incorrectAnswers[1])
-        const optionD = $(`<input type="radio" name="answerChoices${index}" value="optionD">`)
-        // const optionDText = $('<label for="optionD">').text(question.incorrectAnswers[2])
-
-        const options = [ //makes an array of the answers
-            { value: 'optionA', text: question.correctAnswer },
-            { value: 'optionB', text: question.incorrectAnswers[0] },
-            { value: 'optionC', text: question.incorrectAnswers[1] },
-            { value: 'optionD', text: question.incorrectAnswers[2] },
-        ]
-        function shuffleArray(array) {
-            array.sort(() => Math.random() - 0.5)
+        //Prevent modal content clicks from closing the modal
+        let modalContent = document.querySelector('.modal-content');
+        if (modalContent) {
+            modalContent.addEventListener('click', (e) => e.stopPropagation());
         }
 
-     shuffleArray(options)
-        console.log(options)
+        apiRequest();
+    } else {
+        console.error('Modal element not found');
+    }
+});
 
-        optionBlockA.append(optionA, options[0].text)
-        optionBlockB.append(optionB, options[1].text)
-        optionBlockC.append(optionC, options[2].text)
-        optionBlockD.append(optionD, options[3].text)
-        questionBlock.append(questionText);
-        questionBlock.append(optionBlockA, optionBlockB, optionBlockC, optionBlockD);
-        container.append(questionBlock)
+// Function to display quiz questions and their options as buttons
+function displayQuestions(questions) {
+    const container = $('#carousel-demo');
+    container.empty();
 
+    questions.forEach((question, index) => {
+        const questionBlock = $('<div>').addClass('question-block');
+        const questionText = $('<p>').addClass('question-text').text(`Question ${index + 1}: ${question.question}`);
+
+        // Combine correct and incorrect answers into one array with their actual text
+        let options = [
+            { value: question.correctAnswer, text: question.correctAnswer }, // Use the answer itself as the button text
+            ...question.incorrectAnswers.map(answer => ({ value: answer, text: answer }))
+        ];
+
+        shuffleArray(options); // Shuffle the options to randomize their order
+
+        // Create buttons for each option, setting the button text to the actual answer text
+        const optionButtons = options.map(option => {
+            return $('<button>')
+                .addClass('button option-button')
+                .text(option.text) // Set button text to the option's actual text
+                .click(function() {
+                    localStorage.setItem(`question${index}`, JSON.stringify({ questionId: question.id, selectedAnswer: option.value }));
+
+                    $(this).siblings().removeClass('is-selected');
+                    $(this).addClass('is-selected');
+                });
+        });
+
+        questionBlock.append(questionText, ...optionButtons);
+        container.append(questionBlock);
     });
+
+    // Initialize carousel here, if needed
     const carousels = bulmaCarousel.attach('#carousel-demo', {
         loop: true,
         slidesToScroll: 1,
         slidesToShow: 1,
     });
 }
+
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+    }
+}
+
+// document.addEventListener('DOMContentLoaded', function() {
+    // Ensure the submit button is fully loaded before attaching the event listener
+    const submitQuizBtn = document.getElementById('submit-quiz');
+    if (submitQuizBtn) {
+        submitQuizBtn.addEventListener('click', function() {
+            console.log("gothere3");
+            const questions = JSON.parse(localStorage.getItem('triviaQuestions')) || [];
+            let answers = [];
+            
+            let correctCount = 0
+            questions.forEach(function(question, index) {
+                // let selectedOption = document.querySelector(`input[name="answerChoices${index}"]:checked`);
+                const userChoice = JSON.parse(localStorage.getItem(`question${index}`));
+
+            
+                console.log(`question${index}`)
+                console.log(index,question.correctAnswer, userChoice);
+                if (userChoice) {
+                if (question.correctAnswer === userChoice.selectedAnswer) {
+                    correctCount = correctCount + 1 
+                 }}
+            
+            });
+
+            for (let index = 0; index < answers.length; index++) {
+                const element = answers[index];
+                console.log(answers[index]);   
+            }
+
+            // Store the total number of correct answers and total questions for access in results.html
+            localStorage.setItem('correctCount', correctCount);
+            localStorage.setItem('totalQuestions', questions.length);
+            
+            // Redirect to results.html to display the results
+            window.location.href = 'results.html';
+        });
+    } else {
+        console.error('Submit button not found.');
+    }
+
