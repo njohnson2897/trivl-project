@@ -80,3 +80,28 @@ input {
     box-sizing: border-box;
 }
 
+/* Style for normal button */
+.button.option-button {
+    background-color: #f5f5f5; /* Light grey, adjust as needed */
+    color: #363636;
+    border: 1px solid #dbdbdb; 
+    cursor: pointer;
+    margin: 5px;
+}
+
+/* Style for button when it's clicked (selected) */
+.button.option-button.is-selected {
+    background-color: #3273dc; 
+    color: #ffffff; 
+    border-color: #3273dc; 
+}
+
+/* Add some hover effect to buttons for better UX */
+.button.option-button:hover {
+    background-color: #e8e8e8; 
+}
+
+/* Specific hover style for selected button to maintain its distinctiveness */
+.button.option-button.is-selected:hover {
+    background-color: #276cda; 
+}
