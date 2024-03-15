@@ -8,6 +8,9 @@
     width: 100%;
 }
 
+.submit-button {
+    text-align: center;
+}
 
 .container p {
     color:white;
@@ -76,7 +79,7 @@ input {
 }
 
 #submit-quiz {
-    width: 50%;
+    width: 20%;
     box-sizing: border-box;
 }
 
