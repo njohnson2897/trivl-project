@@ -21,6 +21,10 @@
     text-decoration: underline;
     font-size: 1.25rem;
 }
+
+.option-block {
+    color:white;
+}
 button {
     display: block;
     width: 100%;

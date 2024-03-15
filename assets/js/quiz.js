@@ -71,18 +71,31 @@ function displayQuestions(questions) {
         const optionBlockC = $('<div>').addClass('option-block columns')
         const optionBlockD = $('<div>').addClass('option-block columns')
         const optionA = $(`<input type="radio" name="answerChoices${index}" value="optionA">`)
-        const optionAText = $('<label for="optionA">').text(question.correctAnswer)
+        // const optionAText = $('<label for="optionA">').text(question.correctAnswer)
         const optionB = $(`<input type="radio" name="answerChoices${index}" value="optionB">`)
-        const optionBText = $('<label for="optionB">').text(question.incorrectAnswers[0])
+        // const optionBText = $('<label for="optionB">').text(question.incorrectAnswers[0])
         const optionC = $(`<input type="radio" name="answerChoices${index}" value="optionC">`)
-        const optionCText = $('<label for="optionC">').text(question.incorrectAnswers[1])
+        // const optionCText = $('<label for="optionC">').text(question.incorrectAnswers[1])
         const optionD = $(`<input type="radio" name="answerChoices${index}" value="optionD">`)
-        const optionDText = $('<label for="optionD">').text(question.incorrectAnswers[2])
-        
-        optionBlockA.append(optionA, optionAText)
-        optionBlockB.append(optionB, optionBText)
-        optionBlockC.append(optionC, optionCText)
-        optionBlockD.append(optionD, optionDText)
+        // const optionDText = $('<label for="optionD">').text(question.incorrectAnswers[2])
+
+        const options = [ //makes an array of the answers
+            { value: 'optionA', text: question.correctAnswer },
+            { value: 'optionB', text: question.incorrectAnswers[0] },
+            { value: 'optionC', text: question.incorrectAnswers[1] },
+            { value: 'optionD', text: question.incorrectAnswers[2] },
+        ]
+        function shuffleArray(array) {
+            array.sort(() => Math.random() - 0.5)
+        }
+
+     shuffleArray(options)
+        console.log(options)
+
+        optionBlockA.append(optionA, options[0].text)
+        optionBlockB.append(optionB, options[1].text)
+        optionBlockC.append(optionC, options[2].text)
+        optionBlockD.append(optionD, options[3].text)
         questionBlock.append(questionText);
         questionBlock.append(optionBlockA, optionBlockB, optionBlockC, optionBlockD);
         container.append(questionBlock)
