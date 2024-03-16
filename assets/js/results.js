@@ -48,6 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const answerList = $('#answerList')
   btn.onclick = function() {
     modal.style.display = "block";
+    answerList.empty()
     const answerKey = JSON.parse(localStorage.getItem('triviaQuestions'))
     console.log(answerKey)
     for (let i=0; i<answerKey.length; i++) {
