@@ -77,24 +77,24 @@ function displayQuestions(questions) {
         const questionBlock = $('<div>').addClass('question-block');
         const questionText = $('<p>').addClass('question-text').text(`Question ${index + 1}: ${question.question}`);
 
-        // Combine correct and incorrect answers into one array with their actual text
         let options = [
-            { value: question.correctAnswer, text: question.correctAnswer }, // Use the answer itself as the button text
+            { value: question.correctAnswer, text: question.correctAnswer },
             ...question.incorrectAnswers.map(answer => ({ value: answer, text: answer }))
         ];
 
-        shuffleArray(options); // Shuffle the options to randomize their order
+        shuffleArray(options);
 
-        // Create buttons for each option, setting the button text to the actual answer text
         const optionButtons = options.map(option => {
             return $('<button>')
                 .addClass('button option-button')
-                .text(option.text) // Set button text to the option's actual text
+                .text(option.text)
                 .click(function() {
                     localStorage.setItem(`question${index}`, JSON.stringify({ questionId: question.id, selectedAnswer: option.value }));
-
                     $(this).siblings().removeClass('is-selected');
                     $(this).addClass('is-selected');
+                    
+                    // Check if all questions have been answered after each selection
+                    checkIfAllQuestionsAnswered(questions);
                 });
         });
 
@@ -102,7 +102,9 @@ function displayQuestions(questions) {
         container.append(questionBlock);
     });
 
-    // Initialize carousel here, if needed
+    // Check if all questions have been answered already (useful for page refreshes)
+    checkIfAllQuestionsAnswered(questions);
+
     const carousels = bulmaCarousel.attach('#carousel-demo', {
         loop: true,
         slidesToScroll: 1,
@@ -110,12 +112,32 @@ function displayQuestions(questions) {
     });
 }
 
+function checkIfAllQuestionsAnswered(questions) {
+    let allAnswered = true;
+    for (let i = 0; i < questions.length; i++) {
+        if (!localStorage.getItem(`question${i}`)) {
+            allAnswered = false;
+            break;
+        }
+    }
+
+    if (allAnswered) {
+        $('#submit-quiz').show(); // Or use .prop('disabled', false) if the button is initially disabled
+    } else {
+        $('#submit-quiz').hide(); // Or use .prop('disabled', true) to disable the button
+    }
+}
+
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+        [array[i], array[j]] = [array[j], array[i]];
     }
 }
+
+$(document).ready(function() {
+    $('#submit-quiz').hide(); // Optionally hide the submit button on page load
+});
 
 // document.addEventListener('DOMContentLoaded', function() {
     // Ensure the submit button is fully loaded before attaching the event listener
