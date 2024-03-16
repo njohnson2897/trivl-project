@@ -45,8 +45,18 @@ document.addEventListener('DOMContentLoaded', () => {
   var span = document.getElementsByClassName("close")[0];
   
   // When the user clicks the button, open the modal 
+  const answerList = $('#answerList')
   btn.onclick = function() {
     modal.style.display = "block";
+    const answerKey = JSON.parse(localStorage.getItem('triviaQuestions'))
+    console.log(answerKey)
+    for (let i=0; i<answerKey.length; i++) {
+    const question = $('<li>')
+    const answer =  $('<li>')
+    question.text(`Question: ${answerKey[i].question}`)
+    answer.text(`Correct Answer: ${answerKey[i].correctAnswer}`)
+    answerList.append(question, answer)
+    };
   }
   
   // When the user clicks on <span> (x), close the modal
