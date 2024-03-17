@@ -73,6 +73,9 @@ function displayQuestions(questions) {
     const container = $('#carousel-demo');
     container.empty();
 
+    // Define the audio element for button clicks
+    const clickSound = new Audio('./assets/audio/button_click.mp3');
+
     questions.forEach((question, index) => {
         const questionBlock = $('<div>').addClass('carousel-item question-block');
         const questionText = $('<p>').addClass('question-text').text(`Question ${index + 1}: ${question.question}`);
@@ -88,7 +91,14 @@ function displayQuestions(questions) {
             return $('<button>')
                 .addClass('button option-button')
                 .text(option.text)
-                .click(function() {
+                // jQuery method for .on, used by attaching to an event handler. Here is it 'function'
+                .on('click', function() {
+                    // play click sound on.click
+                    clickSound.pause(); // Reset audio playback position
+                    clickSound.currentTime = 0; // Ensures the sound can play from start immediately
+                    clickSound.play().catch(function(error) {
+                        console.error('Audio playback failed:', error);
+                    });
                     // Handle option selection UI feedback
                     $(this).closest('.question-block').find('.option-button').removeClass('selected');
                     $(this).addClass('selected');
@@ -164,7 +174,7 @@ $(document).ready(function() {
 
     // Load the questions and initialize the quiz
     // Assuming displayQuestions is called within loadQuestions() or directly here
-    displayQuestions(quizQuestions); // Replace quizQuestions with your questions array or fetching mechanism
+    // displayQuestions(quizQuestions); // Replace quizQuestions with your questions array or fetching mechanism
 });
 // document.addEventListener('DOMContentLoaded', function() {
     // Ensure the submit button is fully loaded before attaching the event listener
