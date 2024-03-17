@@ -81,3 +81,9 @@ input {
 .submit-button {
     text-align: center;
 }
+
+/* this is the for the button to remain a color once the user selects one*/
+.selected {
+    background-color: #007bff; /* Bootstrap primary blue for example */
+    color: white; /* Adjust text color as needed */
+}
