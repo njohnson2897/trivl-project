@@ -74,6 +74,15 @@
     font-size: 50px;
 }
 
+.modal-content li {
+  background-color: #fefefe;
+  margin: 2% auto; /* 15% from the top and centered */
+  padding: 2%;
+  width: 100%; /* Could be more or less, depending on screen size */
+  text-align: center;
+  font-size: 20px;
+}
+
 /* Close button */
 .close {
     color: #aaa;
