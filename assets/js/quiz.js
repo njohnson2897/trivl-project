@@ -5,19 +5,19 @@ function apiRequest() {
         fetch(requestUrl)
             .then(function (response) {
                 return response.json();
-            })
+        })
             .then(function (data) {
                 localStorage.setItem('triviaQuestions', JSON.stringify(data));
 
 
                 displayQuestions(data);
-            })
+        })
 
-
+        // .catch statement : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch
             .catch(function (error) {
                 console.error('Fetch error:', error);
                 $('#carousel-demo').text('Failed to load questions. Please try again later.');
-            });
+        });
 
     }
 
@@ -73,10 +73,7 @@ function displayQuestions(questions) {
     const container = $('#carousel-demo');
     container.empty();
 
-    const currentSessionId = localStorage.getItem('quizSessionId');
-
     questions.forEach((question, index) => {
-        // Note: Ensure the questionBlock structure matches what your carousel expects
         const questionBlock = $('<div>').addClass('carousel-item question-block');
         const questionText = $('<p>').addClass('question-text').text(`Question ${index + 1}: ${question.question}`);
 
@@ -92,47 +89,38 @@ function displayQuestions(questions) {
                 .addClass('button option-button')
                 .text(option.text)
                 .click(function() {
-                    // Remove '.selected' class from all option buttons in the current question block
+                    // Handle option selection UI feedback
                     $(this).closest('.question-block').find('.option-button').removeClass('selected');
-            
-                    // Add '.selected' class to the clicked button to make it stay blue
                     $(this).addClass('selected');
 
-                     // Store the answer and perform any additional logic as needed
+                    // Store the answer
                     const answerData = {
-                        sessionId: currentSessionId,
+                        sessionId: localStorage.getItem('quizSessionId'),
                         questionId: question.id,
                         selectedAnswer: option.value
                     };
                     localStorage.setItem(`question${index}`, JSON.stringify(answerData));
-                    $(this).siblings().removeClass('is-selected');
-                    $(this).addClass('is-selected');
 
-                    // Check if all questions have been answered after each selection
+                    // Advance to the next question in the carousel
+                    myCarouselInstance.next();
+
+                    // Check if all questions have been answered
                     checkIfAllQuestionsAnswered(questions);
-                });
         });
+    });
 
         questionBlock.append(questionText, ...optionButtons);
         container.append(questionBlock);
     });
 
-    // Reinitialize or update your carousel here
-    bulmaCarousel.attach('#carousel-demo', {
+    // Initialize the carousel and store the instance for later use
+    var quizCarousel = bulmaCarousel.attach('#carousel-demo', {
         slidesToShow: 1,
         slidesToScroll: 1,
-        loop: true,
+        loop: false,
         infinite: false
     });
-
-    // Check if all questions have been answered already (useful for page refreshes)
-    checkIfAllQuestionsAnswered(questions);
-
-    const carousels = bulmaCarousel.attach('#carousel-demo', {
-        loop: true,
-        slidesToScroll: 1,
-        slidesToShow: 1,
-    });
+    window.myCarouselInstance = quizCarousel[0];
 }
 
 function checkIfAllQuestionsAnswered(questions) {
@@ -145,9 +133,9 @@ function checkIfAllQuestionsAnswered(questions) {
     }
 
     if (allAnswered) {
-        $('#submit-quiz').show(); // Or use .prop('disabled', false) if the button is initially disabled
+        $('#submit-quiz').show();
     } else {
-        $('#submit-quiz').hide(); // Or use .prop('disabled', true) to disable the button
+        $('#submit-quiz').hide();
     }
 }
 
@@ -162,14 +150,21 @@ $(document).ready(function() {
     // Hide the submit button initially
     $('#submit-quiz').hide();
 
-    //Clear all quiz-related localStorage items
-    for (let i = 0; i < localStorage.length; i++) {
-        let key = localStorage.key(i);
-        if (key.startsWith('question')) {
+    // Clear quiz-related localStorage items for a fresh start
+    // similiar to C+ but review this for more information: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys
+    Object.keys(localStorage).forEach(key => {
+        if (key.startsWith('question') || key === 'quizSessionId') {
             localStorage.removeItem(key);
         }
-    }
+    });
 
+    // Generate a new session ID for this quiz attempt
+    const sessionId = new Date().getTime();
+    localStorage.setItem('quizSessionId', sessionId.toString());
+
+    // Load the questions and initialize the quiz
+    // Assuming displayQuestions is called within loadQuestions() or directly here
+    displayQuestions(quizQuestions); // Replace quizQuestions with your questions array or fetching mechanism
 });
 // document.addEventListener('DOMContentLoaded', function() {
     // Ensure the submit button is fully loaded before attaching the event listener
