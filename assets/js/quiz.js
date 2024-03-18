@@ -42,13 +42,41 @@ function apiRequest() {
 
 // modal for javascript: https://bulma.io/documentation/components/modal/#image-modal
 document.addEventListener('DOMContentLoaded', () => {
-    const modal = document.getElementById('trivlModal');
-    if (modal) {
-        // Automatically show the modal when the page is loaded
-        modal.classList.add('is-active');
+    console.log('DOMContentLoaded event fired!');
+    const trivlModal = document.getElementById('trivlModal');
+    const timerModal = document.getElementById('timerModal');
+    
 
+    // Tracks if quiz has been taken
+    const trackUse = localStorage.getItem("takenQuiz");
+
+
+    if (trackUse === "true") {
+        console.log("already took it!");
+        // Show the timerModal only if the quiz has been taken
+        if (timerModal) {
+            timerModal.classList.add('is-active');
+          console.log('openingTimer')
+            setupModal(timerModal);
+        } else {
+            console.error('Timer Modal element not found');
+        }
+    } else {
+        // Show the trivlModal if the quiz has not been taken
+        if (trivlModal) {
+            trivlModal.classList.add('is-active');
+            setupModal(trivlModal);
+            apiRequest();
+        } else {
+            console.error('Trivl Modal element not found');
+        }
+    }
+
+
+    function setupModal(modal) {
         const modalBg = modal.querySelector('.modal-background');
         const modalClose = modal.querySelector('.modal-close');
+
 
         [modalBg, modalClose].forEach(el => {
             if (el) {
@@ -56,15 +84,13 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        //Prevent modal content clicks from closing the modal
-        let modalContent = document.querySelector('.modal-content');
+
+        // Prevent modal content clicks from closing the modal
+        let modalContent = modal.querySelector('.modal-content');
+      console.log(modalContent)
         if (modalContent) {
             modalContent.addEventListener('click', (e) => e.stopPropagation());
         }
-
-        apiRequest();
-    } else {
-        console.error('Modal element not found');
     }
 });
 
@@ -203,11 +229,34 @@ $(document).ready(function() {
             // Store the total number of correct answers and total questions for access in results.html
             localStorage.setItem('correctCount', correctCount);
             localStorage.setItem('totalQuestions', questions.length);
-            
+            localStorage.setItem('takenQuiz', true);
             // Redirect to results.html to display the results
             window.location.href = 'results.html';
         });
     } else {
         console.error('Submit button not found.');
     }
+    const timerInterval = setInterval(() => {
+        const timer = $('#timer')
+        const currentTime = (new Date().getTime() / 1000)
+        const lastUpdateTime = parseInt(localStorage.getItem('lastUpdateTime'))/1000;
+        const timeSinceUpdate = (currentTime - lastUpdateTime)
+        const expiryTime = (86400) - timeSinceUpdate;
+        let convertedTime = moment.unix(expiryTime).format('HH:mm:ss')
+        console.log(convertedTime)
+         const hours = Math.floor(expiryTime / 3600) % 24
+        const minutes = Math.floor((expiryTime % (60 * 60) / 60))
+        const seconds = Math.floor((expiryTime % (60 * 60)) % 60)
+   
+   
+    timer.text(`Time remaining to next quiz: ${hours}h ${minutes}m ${seconds}s`);
+   
+   
+    }, 1000); // Update every second
+   
+
+
+
+
+
 
