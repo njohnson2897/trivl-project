@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
 document.addEventListener('DOMContentLoaded', () => {
     const modal = document.getElementById('trivlModal');
     // Automatically show the modal when the page is loaded
+    
     modal.classList.add('is-active');
   
     const modalBg = modal.querySelector('.modal-background');
