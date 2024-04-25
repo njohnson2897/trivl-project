@@ -1,5 +1,8 @@
+const oneDayCountdown = 24 * 60 * 60 * 1000   //    one day in milliseconds 24 * 60 * 60 * 1000
+
 function apiRequest() {
     const fetchAndDisplayQuestions = () => {
+        console.log("fetching new questions")
         const requestUrl = 'https://the-trivia-api.com/api/questions';
 
         fetch(requestUrl)
@@ -26,8 +29,9 @@ function apiRequest() {
         const lastUpdateTime = localStorage.getItem('lastUpdateTime');
         const currentTime = new Date().getTime();
 
-        if (triviaQuestions && lastUpdateTime && (currentTime - parseInt(lastUpdateTime) < 60 * 1000)) { // set to one minute for showing purposes
-            const parsedData = JSON.parse(triviaQuestions);                                              //    for a daily question change add 24 * 60 * 60 * 1000
+        if (triviaQuestions && lastUpdateTime && (currentTime - parseInt(lastUpdateTime) < oneDayCountdown - 1000)) { 
+            console.log(currentTime, parseInt(lastUpdateTime))
+            const parsedData = JSON.parse(triviaQuestions);                                              
             displayQuestions(parsedData);
         } else {
             fetchAndDisplayQuestions();
@@ -37,7 +41,7 @@ function apiRequest() {
 
     updateData();
 
-    setInterval(updateData, 24 * 60 * 60 * 1000);
+    // setInterval(updateData, oneDayCountdown);
 }
 
 // modal for javascript: https://bulma.io/documentation/components/modal/#image-modal
@@ -47,6 +51,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const timerModal = document.getElementById('timerModal');
     // Tracks if quiz has been taken
     const trackUse = localStorage.getItem("takenQuiz");
+    console.log(typeof(trackUse))
+
     if (trackUse === "true") {
         console.log("already took it!");
         // Show the timerModal only if the quiz has been taken
@@ -59,6 +65,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     } else {
         // Show the trivlModal if the quiz has not been taken
+    //setTimeout(function(){
+        if (trackUse === "false")
         if (trivlModal) {
             trivlModal.classList.add('is-active');
             setupModal(trivlModal);
@@ -66,6 +74,8 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             console.error('Trivl Modal element not found');
         }
+    //}, 1000)
+   
     }
     function setupModal(modal) {
         const modalBg = modal.querySelector('.modal-background');
@@ -223,7 +233,7 @@ $(document).ready(function() {
             // Store the total number of correct answers and total questions for access in results.html
             localStorage.setItem('correctCount', correctCount);
             localStorage.setItem('totalQuestions', questions.length);
-            localStorage.setItem('takenQuiz', true);
+            localStorage.setItem('takenQuiz', "true");
             // Redirect to results.html to display the results
             window.location.href = 'results.html';
         });
@@ -235,13 +245,22 @@ $(document).ready(function() {
         const currentTime = (new Date().getTime() / 1000)
         const lastUpdateTime = parseInt(localStorage.getItem('lastUpdateTime'))/1000;
         const timeSinceUpdate = (currentTime - lastUpdateTime)
-        const expiryTime = (86400) - timeSinceUpdate;
-        let convertedTime = moment.unix(expiryTime).format('HH:mm:ss')
-        console.log(convertedTime)
+        const expiryTime = (oneDayCountdown / 1000) - timeSinceUpdate;
+        console.log(timeSinceUpdate, expiryTime)
          const hours = Math.floor(expiryTime / 3600) % 24
         const minutes = Math.floor((expiryTime % (60 * 60) / 60))
         const seconds = Math.floor((expiryTime % (60 * 60)) % 60)
+        console.log(`${hours}h ${minutes}m ${seconds}s`)
+        if (expiryTime <= 0) {
+           localStorage.setItem("takenQuiz", "false")
+            clearInterval (timerInterval);
+           apiRequest()
+            // location.reload()
+            timer.text(`Generating New Quiz`);
+
+        } else {
     timer.text(`Time remaining to next quiz: ${hours}h ${minutes}m ${seconds}s`);
+        }
     }, 1000); // Update every second
 
 
