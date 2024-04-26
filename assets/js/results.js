@@ -32,7 +32,6 @@ document.addEventListener('DOMContentLoaded', () => {
   
     //Prevent modal content clicks from closing the modal
     document.querySelector('.modal-content').addEventListener('click', (e) => e.stopPropagation());
-    apiRequest();
   });
   
   // Get the modal
