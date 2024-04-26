@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const timerModal = document.getElementById('timerModal');
     // Tracks if quiz has been taken
     const trackUse = localStorage.getItem("takenQuiz");
-    console.log(typeof(trackUse))
+    // console.log(typeof(trackUse))
 
     if (trackUse === "true") {
         console.log("already took it!");
@@ -67,6 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Show the trivlModal if the quiz has not been taken
     //setTimeout(function(){
         if (trackUse === "false")
+        console.log("Nope not tookith")
         if (trivlModal) {
             trivlModal.classList.add('is-active');
             setupModal(trivlModal);
